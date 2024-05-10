@@ -23,17 +23,17 @@ public class ParticipantService {
     }
 
     public Collection<Participant> getAll(String loginValue, String sortBy, String sortOrder) {
-        String hql = "FROM Participant WHERE login LIKE :login";
-        if (sortBy.equals("login")) {
+        String hql = "FROM Participant WHERE login LIKE :searchLogin";
+        if (sortBy.toLowerCase().equals("login")) {
             hql += " ORDER BY " + sortBy;
-            if (sortOrder.equals("ASC") || sortOrder.equals("DESC")) {
+            if (sortOrder.equalsIgnoreCase("ASC") || sortOrder.equalsIgnoreCase("DESC")) {
                 hql += " " + sortOrder;
             }
         }
 
 //        String hql = "FROM Participant p ORDER BY p." + sortBy + " " + sortOrder;
         Query query = connector.getSession().createQuery(hql);
-        query.setParameter("login" , "%"+ loginValue + "%" );
+        query.setParameter("searchLogin", "%" + loginValue + "%");
         return query.list();
     }
 

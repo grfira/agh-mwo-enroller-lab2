@@ -34,9 +34,21 @@ public class MeetingService {
 		transaction.commit();
 	}
 
-	public void addMeeeting(Meeting meeting) {
+//	public void addMeeting(Meeting meeting) {
+//		Transaction transaction = session.beginTransaction();
+//		session.save(meeting);
+//		transaction.commit();
+//	}
+public Meeting addMeeting(Meeting meeting) {
 		Transaction transaction = session.beginTransaction();
 		session.save(meeting);
+		transaction.commit();
+		return meeting;
+	}
+
+	public void updateMeeting(Meeting meeting) {
+		Transaction transaction = session.beginTransaction();
+		session.merge(meeting);
 		transaction.commit();
 	}
 }
