@@ -5,6 +5,7 @@ import com.company.enroller.persistence.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,8 @@ public class ParticipantRestController {
 
     @Autowired
     ParticipantService participantService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<?> getParticipants(@RequestParam(value = "sortBy", defaultValue = "") String sortBy,
@@ -45,6 +48,8 @@ public class ParticipantRestController {
                     "Unable to create. A participant with login " + participant.getLogin() + " already exist.",
                     HttpStatus.CONFLICT);
         }
+        String hashedPassword = passwordEncoder.encode(participant.getPassword());
+        participant.setPassword(hashedPassword);
         participantService.add(participant);
         return new ResponseEntity<Participant>(participant, HttpStatus.CREATED);
     }
@@ -65,7 +70,8 @@ public class ParticipantRestController {
         if (participant == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        participant.setPassword(updatedParticipant.getPassword());
+        String hashedPassword = passwordEncoder.encode(updatedParticipant.getPassword());
+        participant.setPassword(hashedPassword);
         participantService.update(participant);
         return new ResponseEntity<Participant>(HttpStatus.OK);
     }
