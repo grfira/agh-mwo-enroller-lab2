@@ -1,4 +1,4 @@
-package com.company.enroller.Security;
+package com.company.enroller.security;
 
 import com.company.enroller.model.Participant;
 import com.company.enroller.persistence.ParticipantService;

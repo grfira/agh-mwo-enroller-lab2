@@ -1,4 +1,4 @@
-package com.company.enroller.Security;
+package com.company.enroller.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.company.enroller.Security;
+package com.company.enroller.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
